@@ -1,38 +1,55 @@
-"""API Flask minimale exposant l'agent et l'audit."""
-
-from flask import Flask, jsonify, request
+from flask import Flask, render_template, jsonify, request
 from .gloire_dev_ia import GloireDevIA
 from .security import SecurityAudit
+import json
 
-app = Flask(__name__)
+# Initialisation de Flask en précisant les dossiers
+app = Flask(__name__, template_folder='templates', static_folder='static')
+
+# Instancier l'agent et l'auditeur
 agent = GloireDevIA()
 auditor = SecurityAudit()
 
-@app.get("/")
+@app.route('/')
 def index():
-    """Point d'entrée racine : redirige ou informe que le service est actif"""
-    return jsonify({
-        "status": "online",
-        "message": "Bienvenue sur GloireDevIA API",
-        "health_check": "/health"
-    }), 200
+    return render_template('index.html', agent_name=agent.name)
 
-@app.get("/health")
-def health():
-    return jsonify({"status": "ok", "agent": agent.name}), 200
-
-@app.post("/analyze")
+@app.post('/analyze')
 def analyze():
-    payload = request.get_json(silent=True) or {}
+    # Accepte JSON envoyé par fetch ou formulaire
+    if request.is_json:
+        payload = request.get_json(silent=True) or {}
+    else:
+        raw = request.form.get('payload') or request.data.decode('utf-8')
+        try:
+            payload = json.loads(raw) if raw else {}
+        except Exception:
+            payload = {"raw": raw}
+
     result = agent.analyze(payload)
-    return jsonify(result), 200
 
-@app.post("/audit")
+    # Si la requête attend HTML, rendre un template, sinon JSON
+    accept = request.headers.get('Accept', '')
+    if 'text/html' in accept:
+        return render_template('result.html', title='Analyse', result=result)
+    return jsonify(result)
+
+@app.post('/audit')
 def audit():
-    payload = request.get_json(silent=True) or {}
-    report = auditor.audit(payload)
-    return jsonify(report), 200
+    if request.is_json:
+        payload = request.get_json(silent=True) or {}
+    else:
+        raw = request.form.get('payload') or request.data.decode('utf-8')
+        try:
+            payload = json.loads(raw) if raw else {}
+        except Exception:
+            payload = {"raw": raw}
 
-if __name__ == "__main__":
-    # Exécution locale pour développement (gunicorn utilisé en production sur Render)
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    report = auditor.audit(payload)
+    accept = request.headers.get('Accept', '')
+    if 'text/html' in accept:
+        return render_template('result.html', title='Audit', result=report)
+    return jsonify(report)
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)
