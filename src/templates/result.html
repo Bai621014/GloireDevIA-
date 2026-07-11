@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{{ title }} — GloireDevIA</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+  <main class="container">
+    <header><h1>{{ title }}</h1></header>
+    <section class="card">
+      <pre class="output">{{ result | tojson(indent=2) }}</pre>
+    </section>
+    <p><a href="{{ url_for('index') }}">Retour</a></p>
+  </main>
+</body>
+</html>
