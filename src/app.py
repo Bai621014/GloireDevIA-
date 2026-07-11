@@ -8,6 +8,15 @@ app = Flask(__name__)
 agent = GloireDevIA()
 auditor = SecurityAudit()
 
+@app.get("/")
+def index():
+    """Point d'entrée racine : redirige ou informe que le service est actif"""
+    return jsonify({
+        "status": "online",
+        "message": "Bienvenue sur GloireDevIA API",
+        "health_check": "/health"
+    }), 200
+
 @app.get("/health")
 def health():
     return jsonify({"status": "ok", "agent": agent.name}), 200
