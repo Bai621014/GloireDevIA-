@@ -3,9 +3,10 @@ import sys
 import os
 from datetime import datetime
 
-# AJOUT DIRECT DE LA RACINE ACTUELLE AU PATH
+# Ajoute le répertoire courant (la racine) au PATH
 sys.path.append(os.getcwd())
 
+# Importation absolue (SANS LES POINTS)
 from src.gloire_base import GloireBase
 from src.blockchain_agent import GloireDevIA_Web3
 
@@ -35,7 +36,7 @@ class GloireOrchestrator:
 
 if __name__ == "__main__":
     bot = GloireOrchestrator()
-    print("Moteur Pro activé. Surveillance active...")
+    print("Système de surveillance activé sur Redmi 13.")
     while True:
         bot.run_cycle()
         time.sleep(3600)
