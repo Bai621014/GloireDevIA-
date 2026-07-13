@@ -2,10 +2,10 @@ import time
 import sys
 import os
 
-# Ajoute le dossier racine au chemin système pour que les imports fonctionnent
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Ajoute le répertoire actuel (là où est orchestrator.py) au chemin
+# Puis remonte d'un cran pour que 'src' soit vu comme un package
+sys.path.append(os.getcwd())
 
-# Imports corrigés (sans le point)
 from src.gloire_base import GloireBase
 from src.blockchain_agent import GloireDevIA_Web3
 
@@ -13,7 +13,7 @@ class GloireOrchestrator:
     def __init__(self):
         self.db = GloireBase()
         self.agent = GloireDevIA_Web3()
-        # Lecture propre depuis le registre (ton fichier registry.json)
+        # Lecture du seuil
         self.threshold = self.db.db.get("settings", {}).get("minTreasuryThreshold", 1000000000000000000)
 
     def run_cycle(self):
