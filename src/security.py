@@ -1,49 +1,46 @@
 """Audit des 6 piliers ISO 20022 — module utilitaire."""
-
-from typing import Dict, List
-
-PILIERS = [
-    "Gouvernance",
-    "Confidentialité",
-    "Intégrité",
-    "Disponibilité",
-    "Traçabilité",
-    "Conformité"
-]
+from typing import Dict, List, Any
+from datetime import datetime
 
 class SecurityAudit:
-    """Fournit un audit minimal basé sur les 6 piliers ISO 20022."""
+    """Fournit un audit formalisé basé sur les 6 piliers ISO 20022."""
 
     def __init__(self) -> None:
-        self.piliers = PILIERS
+        self.piliers = [
+            "Gouvernance", "Confidentialité", "Intégrité", 
+            "Disponibilité", "Traçabilité", "Conformité"
+        ]
 
-    def audit(self, context: Dict[str, any]) -> Dict[str, List[str]]:
-        """Retourne un rapport simple listant pour chaque pilier des observations.
-
-        Le context peut contenir des clés comme 'policies', 'logs', 'access_control'.
-        Cette implémentation est volontairement légère — à enrichir en production.
-        """
-        report = {}
-        # Règles heuristiques minimales pour l'exemple
+    def audit(self, context: Dict[str, Any]) -> Dict[str, Any]:
+        """Retourne un rapport structuré avec timestamp et statut global."""
+        report = {
+            "timestamp": datetime.utcnow().isoformat(),
+            "status": "COMPLETED",
+            "findings": {}
+        }
+        
+        # Logique d'audit
         for p in self.piliers:
-            findings = []
-            if p == "Gouvernance":
-                if not context.get("policies"):
-                    findings.append("Aucune politique documentée détectée.")
-            if p == "Confidentialité":
-                if not context.get("encryption"):
-                    findings.append("Chiffrement des données non confirmé.")
-            if p == "Intégrité":
-                if not context.get("checksums") and not context.get("signatures"):
-                    findings.append("Absence de mécanismes d'intégrité identifiés.")
-            if p == "Disponibilité":
-                if not context.get("monitoring"):
-                    findings.append("Surveillance/monitoring non configuré.")
-            if p == "Traçabilité":
-                if not context.get("logging"):
-                    findings.append("Journaux/traces manquants ou insuffisants.")
-            if p == "Conformité":
-                if not context.get("compliance_docs"):
-                    findings.append("Documents de conformité absents.")
-            report[p] = findings or ["Aucune anomalie majeure détectée (vérifier en profondeur)."]
+            findings = self._check_pilier(p, context)
+            report["findings"][p] = findings
+            
         return report
+
+    def _check_pilier(self, pilier: str, context: Dict[str, Any]) -> List[str]:
+        """Moteur de règles heuristiques."""
+        # Exemple de règles (à étendre)
+        checks = {
+            "Gouvernance": [("policies", "Aucune politique documentée détectée.")],
+            "Confidentialité": [("encryption", "Chiffrement des données non confirmé.")],
+            "Intégrité": [("checksums", "Absence de mécanismes d'intégrité identifiés.")],
+            "Disponibilité": [("monitoring", "Surveillance/monitoring non configuré.")],
+            "Traçabilité": [("logging", "Journaux/traces manquants.")],
+            "Conformité": [("compliance_docs", "Documents de conformité absents.")]
+        }
+        
+        results = []
+        for key, msg in checks.get(pilier, []):
+            if not context.get(key):
+                results.append(msg)
+        
+        return results or ["PASS: Aucune anomalie critique détectée."]
