@@ -3,8 +3,8 @@ import sys
 import os
 from datetime import datetime
 
-# Ajoute la racine au chemin pour que 'src' soit vu comme un package
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+# AJOUT DIRECT DE LA RACINE ACTUELLE AU PATH
+sys.path.append(os.getcwd())
 
 from src.gloire_base import GloireBase
 from src.blockchain_agent import GloireDevIA_Web3
@@ -35,6 +35,7 @@ class GloireOrchestrator:
 
 if __name__ == "__main__":
     bot = GloireOrchestrator()
+    print("Moteur Pro activé. Surveillance active...")
     while True:
         bot.run_cycle()
         time.sleep(3600)
