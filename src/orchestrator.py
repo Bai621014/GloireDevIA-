@@ -3,8 +3,8 @@ import sys
 import os
 from datetime import datetime
 
-# Ajout du dossier racine au PATH
-sys.path.append(os.getcwd())
+# Ajoute la racine au chemin pour que 'src' soit vu comme un package
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from src.gloire_base import GloireBase
 from src.blockchain_agent import GloireDevIA_Web3
