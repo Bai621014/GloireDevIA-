@@ -3,10 +3,10 @@ import sys
 import os
 from datetime import datetime
 
-# Ajoute le répertoire courant à sys.path pour que Python puisse trouver 'src'
+# Ajout du répertoire courant au PATH pour trouver 'src'
 sys.path.append(os.getcwd())
 
-# Importations absolues : supprime le point '.' devant le nom du module
+# Importations absolues (sans le point '.')
 from src.gloire_base import GloireBase
 from src.blockchain_agent import GloireDevIA_Web3
 
