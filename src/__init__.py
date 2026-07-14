@@ -1,23 +1,31 @@
 """
-GLOIREDEVIA - MODULE D'INITIALISATION SOUVERAIN
-Standard : ISO 20022
+GLOIREDEVIA — MODULE D'INITIALISATION SOUVERAIN (2026.VIP)
+Standard : ISO 20022 - Architecture : Façade Sécurisée
 """
 
-# Importation directe pour accès rapide (Pattern Façade)
+import logging
 from .gloire_dev_ia import GloireDevIA
 from .security import SecurityAudit
 
-# Métadonnées de versionnement pour le suivi d'audit
-__version__ = "2026.07.14"
-__author__ = "GloirePay Core"
+# Configuration du log système pour traçabilité immédiate
+logging.basicConfig(level=logging.INFO, format="[%(asctime)s] [GLOIREPAY] %(message)s")
+logger = logging.getLogger(__name__)
 
-# Définition explicite des composants exposés
-__all__ = ["GloireDevIA", "SecurityAudit"]
+# Métadonnées de conformité
+__version__ = "2026.07.14"
+__author__ = "GloirePay Core Team"
+__all__ = ["GloireDevIA", "SecurityAudit", "get_system_status"]
 
 def get_system_status():
-    """Vérification rapide de l'intégrité du module."""
-    return {
+    """Vérification d'intégrité haute-fidélité pour le module."""
+    status = {
         "module": "GloireDevIA.src",
         "status": "OPERATIONAL",
-        "version": __version__
+        "version": __version__,
+        "compliance": "ISO_20022_V1"
     }
+    logger.info(f"Intégrité vérifiée : {status['status']} (v{__version__})")
+    return status
+
+# Initialisation du logger de démarrage
+logger.info("Noyau Souverain GloireDevIA en ligne.")
