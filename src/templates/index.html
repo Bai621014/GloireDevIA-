@@ -1,9 +1,25 @@
-    <section class="card">
-      <h2>GloireDevIA : Flux de Travail</h2>
-      
-      <div id="status-bar" style="margin-bottom: 12px; font-weight: 600; color: var(--accent); padding: 8px; border-left: 4px solid var(--accent); background: #f0f7ff;">
-        Système prêt : En attente d'instruction souveraine...
-      </div>
-      
-      <pre id="output" class="output">Aucun résultat à afficher</pre>
-    </section>
+<section class="card">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+    <h2 style="margin: 0; font-size: 1.25rem;">GloireDevIA : Flux de Travail</h2>
+    <div id="chain-status" style="font-size: 0.75rem; background: #064e3b; color: #34d399; padding: 4px 8px; border-radius: 20px;">
+      ● POLYGON ZKEVM
+    </div>
+  </div>
+  
+  <div id="status-bar" class="status-bar" style="margin-bottom: 12px; font-weight: 600; color: var(--accent); padding: 12px; border-left: 4px solid var(--accent); background: #0b1220; border-radius: 0 4px 4px 0;">
+    Système en ligne : Attente d'instruction souveraine...
+  </div>
+  
+  <pre id="output" class="output">
+  [INFOS] Système initialisé
+  [STATUS] Audit ISO 20022 activé
+  [READY] En attente de payload...
+  </pre>
+</section>
+
+<style>
+  .status-bar {
+    transition: all 0.3s ease;
+    font-family: 'JetBrains Mono', monospace;
+  }
+</style>
