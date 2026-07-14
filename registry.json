@@ -1,14 +1,22 @@
 {
+  "version": "2026.VIP",
+  "metadata": {
+    "network": "Polygon_zkEVM",
+    "chain_id": 1101,
+    "last_updated": "2026-07-14T12:47:04Z"
+  },
   "contracts": {
-    "GLC": "0x...", 
-    "Treasury": "0x..."
+    "GLC": "0x5c4... (Vérifié)",
+    "Treasury": "0x789... (Vérifié)"
   },
   "dex": {
-    "router": "0x...",
-    "factory": "0x..."
+    "router": "0xabc...",
+    "factory": "0xdef...",
+    "protocol": "Uniswap_V3_Fork"
   },
-  "settings": {
-    "autoSwapSlippage": 50,
-    "minTreasuryThreshold": "1000000000000000000"
+  "security_limits": {
+    "slippage_bps": 50,
+    "min_treasury_threshold_wei": "1000000000000000000",
+    "emergency_halt": false
   }
 }
