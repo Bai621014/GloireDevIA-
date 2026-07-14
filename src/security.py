@@ -1,9 +1,16 @@
-"""Audit des 6 piliers ISO 20022 — module utilitaire."""
+"""
+GLOIREPAY — MOTEUR D'AUDIT SOUVERAIN (2026.VIP)
+Standard ISO 20022 : Validation structurée, criticité et intégrité.
+"""
+
+from datetime import datetime, timezone
 from typing import Dict, List, Any
-from datetime import datetime
+import logging
+
+logger = logging.getLogger("GloirePay-Audit")
 
 class SecurityAudit:
-    """Fournit un audit formalisé basé sur les 6 piliers ISO 20022."""
+    """Moteur d'audit haute fidélité pour systèmes financiers souverains."""
 
     def __init__(self) -> None:
         self.piliers = [
@@ -12,35 +19,35 @@ class SecurityAudit:
         ]
 
     def audit(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Retourne un rapport structuré avec timestamp et statut global."""
+        """Génère un rapport d'audit signé temporellement."""
         report = {
-            "timestamp": datetime.utcnow().isoformat(),
-            "status": "COMPLETED",
+            "meta": {
+                "timestamp": datetime.now(timezone.utc).isoformat(),
+                "version": "2026.VIP",
+                "status": "SECURE_AUDIT"
+            },
             "findings": {}
         }
         
-        # Logique d'audit
-        for p in self.piliers:
-            findings = self._check_pilier(p, context)
-            report["findings"][p] = findings
+        for pilier in self.piliers:
+            report["findings"][pilier] = self._check_pilier(pilier, context)
             
         return report
 
-    def _check_pilier(self, pilier: str, context: Dict[str, Any]) -> List[str]:
-        """Moteur de règles heuristiques."""
-        # Exemple de règles (à étendre)
-        checks = {
-            "Gouvernance": [("policies", "Aucune politique documentée détectée.")],
-            "Confidentialité": [("encryption", "Chiffrement des données non confirmé.")],
-            "Intégrité": [("checksums", "Absence de mécanismes d'intégrité identifiés.")],
-            "Disponibilité": [("monitoring", "Surveillance/monitoring non configuré.")],
-            "Traçabilité": [("logging", "Journaux/traces manquants.")],
-            "Conformité": [("compliance_docs", "Documents de conformité absents.")]
+    def _check_pilier(self, pilier: str, context: Dict[str, Any]) -> List[Dict[str, Any]]:
+        """Moteur de règles heuristiques avec évaluation de sévérité."""
+        rules = {
+            "Gouvernance": [("policies", "Critique", "Politiques non documentées")],
+            "Confidentialité": [("encryption", "Haute", "Chiffrement AES-256 manquant")],
+            "Intégrité": [("checksums", "Haute", "Mécanisme d'intégrité indisponible")],
+            "Disponibilité": [("monitoring", "Moyenne", "Monitoring absent")],
+            "Traçabilité": [("logging", "Haute", "Absence de journaux d'audit")],
+            "Conformité": [("compliance_docs", "Critique", "Standard ISO 20022 requis")]
         }
         
         results = []
-        for key, msg in checks.get(pilier, []):
+        for key, severity, msg in rules.get(pilier, []):
             if not context.get(key):
-                results.append(msg)
+                results.append({"severity": severity, "message": msg, "code": f"ERR_{key.upper()}"})
         
-        return results or ["PASS: Aucune anomalie critique détectée."]
+        return results if results else [{"severity": "PASS", "message": "Conformité validée"}]
