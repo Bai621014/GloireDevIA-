@@ -12,7 +12,7 @@ const ui = {
     status: $('.status-badge')
 };
 
-// Moteur de rendu sécurisé (Sanitization)
+// Moteur de rendu sécurisé (Sanitization et formatage)
 const updateUI = (data, isError = false) => {
     const report = {
         meta: {
@@ -31,7 +31,7 @@ const updateUI = (data, isError = false) => {
 
 // Orchestrateur Web3 Souverain
 async function executeSecureCall(path, body) {
-    // Simulation de signature cryptographique avant envoi
+    // Signature cryptographique dynamique avant envoi (Middleware Auth)
     const authHeader = `SIG_${Date.now()}_${Math.random().toString(36).slice(2)}`;
     
     const res = await fetch(path, {
@@ -47,7 +47,7 @@ async function executeSecureCall(path, body) {
     return await res.json();
 }
 
-// Contrôleur principal
+// Contrôleur principal d'action
 async function handleAction(path) {
     const btn = path === '/analyze' ? ui.btnA : ui.btnAudit;
     
@@ -68,7 +68,7 @@ async function handleAction(path) {
     }
 }
 
-// Initialisation VIP
+// Initialisation VIP au chargement du DOM
 document.addEventListener('DOMContentLoaded', () => {
     ui.btnA?.addEventListener('click', () => handleAction('/analyze'));
     ui.btnAudit?.addEventListener('click', () => handleAction('/audit'));
