@@ -1,11 +1,10 @@
   deploy:
     needs: audit-et-simulation
     runs-on: ubuntu-latest
-    # --- AJOUTEZ CE BLOC ICI ---
     env:
-      POLYGON_PRIVATE_KEY: ${{ secrets.POLYGON_PRIVATE_KEY }}
+      # Utilisation du nouveau nom pour votre clé privée
+      GLOBALE_CLE_PRIVEE: ${{ secrets.GLOBALE_CLE_PRIVEE }}
       POLYGON_RPC_URL: ${{ secrets.POLYGON_RPC_URL }}
-    # ---------------------------
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -19,5 +18,4 @@
         run: pip install web3
 
       - name: Exécution du transfert souverain
-        # Plus besoin de redéfinir env ici, il est hérité du job
         run: python execute_transfer.py
