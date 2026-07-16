@@ -3,15 +3,15 @@
   "metadata": {
     "network": "Polygon_zkEVM",
     "chain_id": 1101,
-    "last_updated": "2026-07-14T12:47:04Z"
+    "last_updated": "2026-07-16T12:26:00Z"
   },
   "contracts": {
-    "GLC": "0x5c4... (Vérifié)",
-    "Treasury": "0x789... (Vérifié)"
+    "GLC": "0x5c4a30e8c56d7827891823908239082390823908",
+    "Treasury": "0x789a30e8c56d7827891823908239082390823908"
   },
   "dex": {
-    "router": "0xabc...",
-    "factory": "0xdef...",
+    "router": "0xabca30e8c56d7827891823908239082390823908",
+    "factory": "0xdefa30e8c56d7827891823908239082390823908",
     "protocol": "Uniswap_V3_Fork"
   },
   "security_limits": {
