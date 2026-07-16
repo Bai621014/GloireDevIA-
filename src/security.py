@@ -1,8 +1,13 @@
+"""
+GLOIREPAY — MOTEUR D'AUDIT SOUVERAIN (2026.VIP)
+Standard ISO 20022 : Validation structurée, criticité et intégrité.
+"""
+
 from datetime import datetime, timezone
 from typing import Dict, List, Any
 import logging
 
-logger = logging.getLogger("GloirePay-Audit")
+logger = logging.getLogger("GloirePay-Security")
 
 class SecurityAudit:
     """Moteur d'audit haute fidélité pour systèmes financiers souverains."""
@@ -14,7 +19,7 @@ class SecurityAudit:
         ]
 
     def audit(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Génère un rapport d'audit signé temporellement avec calcul de risque."""
+        """Génère un rapport d'audit signé temporellement avec évaluation de risque."""
         report = {
             "meta": {
                 "timestamp": datetime.now(timezone.utc).isoformat(),
@@ -22,15 +27,13 @@ class SecurityAudit:
                 "status": "SECURE_AUDIT"
             },
             "findings": {},
-            "risk_level": "LOW" # Calcul dynamique ajouté
+            "risk_level": "LOW"
         }
         
         has_critical = False
         for pilier in self.piliers:
             findings = self._check_pilier(pilier, context)
             report["findings"][pilier] = findings
-            
-            # Calcul du niveau de risque global
             if any(f.get("severity") == "Critique" for f in findings):
                 has_critical = True
         
