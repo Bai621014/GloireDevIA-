@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>GloirePay — Dashboard Souverain</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #0a0a0a; color: #fff; padding: 50px; }
+        .card { border: 1px solid #333; padding: 20px; border-radius: 10px; background: #111; }
+        .status { color: {{ '#00ff9d' if treasury.status == 'online' else '#ff4d4d' }}; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>GloirePay — État Nodal</h1>
+        <p>Statut Trésorerie : <span class="status">{{ treasury.status|upper }}</span></p>
+        <p>Adresse : {{ treasury.address }}</p>
+        <p>Solde (Wei) : {{ treasury.balance_wei }}</p>
+    </div>
+</body>
+</html>
