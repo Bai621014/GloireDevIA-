@@ -15,10 +15,10 @@ jobs:
 
       - name: Simulation de Sécurité (Audit nœud)
         env:
-          POLYGON_RPC_URL: ${{ secrets.POLYGON_RPC_URL }}
+          ALCHEMY_API_KEY: ${{ secrets.ALCHEMY_API_KEY }}
         run: |
           echo ">>> [AUDIT] Vérification de la souveraineté du nœud..."
-          curl -s -X POST "$POLYGON_RPC_URL" \
+          curl -s -X POST "$ALCHEMY_API_KEY" \
             -H "Content-Type: application/json" \
             --data '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}'
           echo ">>> [SUCCESS] Audit validé."
@@ -33,13 +33,13 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'
+          python-version: '3.11'
 
       - name: Installation des dépendances
         run: pip install web3
 
       - name: Exécution du transfert souverain
         env:
-          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
-          POLYGON_RPC_URL: ${{ secrets.POLYGON_RPC_URL }}
+          POLYGON_PRIVATE_KEY: ${{ secrets.POLYGON_PRIVATE_KEY }}
+          ALCHEMY_API_KEY: ${{ secrets.ALCHEMY_API_KEY }}
         run: python execute_transfer.py
