@@ -2,10 +2,16 @@ import os
 from web3 import Web3
 
 def send_transaction():
-    w3 = Web3(Web3.HTTPProvider(os.getenv('POLYGON_RPC_URL')))
+    # Utilisation de la clé définie dans GitHub Secrets
+    rpc_url = os.getenv('ALCHEMY_API_KEY') 
+    w3 = Web3(Web3.HTTPProvider(rpc_url))
     
-    # Nettoyage strict de la clé privée
-    raw_key = os.getenv('PRIVATE_KEY')
+    # Correction : Utilisation du nom exact de la variable secrète
+    raw_key = os.getenv('POLYGON_PRIVATE_KEY')
+    
+    if not raw_key:
+        raise ValueError("La clé privée n'est pas chargée. Vérifiez le nom de la variable dans GitHub Secrets.")
+
     clean_key = raw_key.strip().replace('0x', '')
     account = w3.eth.account.from_key(clean_key)
     
