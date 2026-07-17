@@ -3,8 +3,6 @@ name: GloirePay — Pipeline Souverain
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 jobs:
   audit-et-simulation:
@@ -13,20 +11,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Simulation de Sécurité (Audit nœud)
+      - name: Audit Nœud & Structure
         env:
           POLYGON_RPC_URL: ${{ secrets.POLYGON_RPC_URL }}
         run: |
-          echo ">>> [AUDIT] Vérification de la souveraineté du nœud..."
+          echo ">>> [AUDIT] Vérification de la souveraineté..."
           curl -s -X POST "$POLYGON_RPC_URL" \
             -H "Content-Type: application/json" \
             --data '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}'
+          ls -R  # Vérification que vos dossiers core/, hub/, etc., sont bien présents
 
   deploy:
     needs: audit-et-simulation
     runs-on: ubuntu-latest
     env:
-      # La variable GLOBALE_CLE_PRIVEE a été supprimée pour sécurité totale
       POLYGON_RPC_URL: ${{ secrets.POLYGON_RPC_URL }}
     steps:
       - name: Checkout code
@@ -37,9 +35,9 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Installation des dépendances
-        run: pip install web3
+      - name: Installation dépendances
+        run: pip install web3 requests
 
-      - name: Exécution du moteur de trésorerie
-        # On exécute maintenant votre main.py qui gère l'audit du Safe
-        run: python main.py
+      - name: Exécution du moteur GloireTech
+        # On priorise votre moteur centralisé à la racine
+        run: python deploy_engine.py
