@@ -5,11 +5,11 @@ Standard : ISO 20022 - Architecture : Façade Sécurisée
 
 import logging
 
-# Import explicite des composants pour la façade
-from .gloire_dev_ia import GloireDevIA
-from .security import SecurityAudit
+# Import explicite des composants (points supprimés pour structure plate)
+from gloire_dev_ia import GloireDevIA
+from security import SecurityAudit
 
-# Configuration du log système pour traçabilité immédiate
+# Configuration du log système
 logging.basicConfig(level=logging.INFO, format="[%(asctime)s] [GLOIREPAY] %(message)s")
 logger = logging.getLogger("GloirePay.Init")
 
@@ -22,7 +22,7 @@ def get_system_status() -> dict:
     """Vérification d'intégrité haute-fidélité pour le module."""
     try:
         status = {
-            "module": "GloirePay.src",
+            "module": "GloirePay.Root",
             "status": "OPERATIONAL",
             "version": __version__,
             "compliance": "ISO_20022_V1"
@@ -31,7 +31,7 @@ def get_system_status() -> dict:
         return status
     except Exception as e:
         logger.error(f"Erreur d'intégrité système : {e}")
-        return {"status": "CRITICAL_FAILURE", "module": "GloirePay.src"}
+        return {"status": "CRITICAL_FAILURE", "module": "GloirePay.Root"}
 
 # Initialisation du noyau
-logger.info("Noyau Souverain GloirePay en ligne.")
+logger.info("Noyau Souverain en ligne.")
