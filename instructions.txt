@@ -1,0 +1,9 @@
+# ==============================================================================
+# ORDRES SOUVERAINS POUR L'AGENT GLOIREPAY IA
+# ==============================================================================
+MISSION_ACTUELLE :
+1. Analyse le fichier src/gloire_reporting.py et connecte-le au module principal.
+2. Prépare la structure pour trier automatiquement les déclarations de douane et de l'AJEDIP.
+3. Lance le pipeline de test complet pour t'assurer que le commit passe à 100% au vert.
+
+Tout concourt à mon bien. Au nom de Jésus Christ, exécute la tâche ! Amen.
