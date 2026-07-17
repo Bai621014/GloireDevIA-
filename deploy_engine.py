@@ -1,19 +1,20 @@
 import sys
 import os
 
-# Importation directe depuis vos dossiers existants
-from core.web3_manager import verifier_tresorerie
-from hub.api_gloirehub import calculer_valeur_fcfa
+# Importation directe depuis la racine (structure plate)
+# On utilise les noms de fichiers exacts vus sur votre capture
+from web3_manager import verifier_tresorerie
+from gloire_hub import calculer_valeur_fcfa 
 
 def run_gloiretech():
     print("--- [GloireTech] Initialisation Souveraine ---")
     
     try:
-        # 1. Audit rapide du Gnosis Safe (Core Web3)
+        # 1. Audit rapide du Gnosis Safe
         print("Audit du Safe en cours...")
         solde = verifier_tresorerie()
         
-        # 2. Conversion intelligente via GloireHub (IA)
+        # 2. Conversion intelligente via GloireHub
         print("Calcul de la valeur souveraine en FCFA...")
         valeur_fcfa = calculer_valeur_fcfa(solde)
         
@@ -25,6 +26,9 @@ def run_gloiretech():
         
     except Exception as e:
         print(f"Erreur lors de l'exécution souveraine : {e}")
+        # On affiche le détail de l'erreur pour le debug dans GitHub
+        import traceback
+        traceback.print_exc()
 
 if __name__ == "__main__":
     run_gloiretech()
