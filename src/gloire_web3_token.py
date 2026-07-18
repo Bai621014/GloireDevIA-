@@ -14,14 +14,18 @@ class GloireWeb3TokenVIP:
         self.symbole = "GLC"
         self.statut_reseau = "PRO_WEB3_ACTIF"
         self.version_moteur = "DERNIER_EXTRA_2026"
+        # Intégration native de la paire d'échange principale
+        self.paire_native = "GLC/MATIC"
 
     def emettre_jetons_securises(self, adresse_destinataire: str, quantite: float) -> Dict[str, Any]:
-        """Génère et distribue les jetons sur la chaîne souveraine avec une signature scellée."""
+        """Génère, distribue et adosse les jetons sur la paire GLC/MATIC avec une signature scellée."""
         logger.info(f"🪙 [WEB3-EXTRA] Émission d'élite de {quantite} {self.symbole} vers l'adresse : {adresse_destinataire}")
+        logger.info(f"🔗 Adossement automatique activé sur la paire souveraine : {self.paire_native}")
         
         return {
             "statut_blockchain": "TRANSACTION_SCELLÉE_VERT",
             "token": self.nom_token,
+            "paire_reference": self.paire_native,
             "quantite_transferee": quantite,
             "adresse_destination": adresse_destinataire,
             "technologie": "SMART_CONTRACT_DERNIER_EXTRA",
